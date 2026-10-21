@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>朝霧すい - YouTube</title>
+<style>
+:root{color-scheme:dark;--bg:#101826;--panel:#192638;--accent:#8bd5e8;--text:#edf5fb}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,sans-serif;background:radial-gradient(circle at top,#253e58,#101826 60%);color:var(--text);min-height:100vh}
+main{max-width:760px;margin:auto;padding:24px 16px}header{text-align:center;padding:24px 0}
+.avatar{width:128px;height:128px;border-radius:50%;margin:auto;display:grid;place-items:center;background:linear-gradient(135deg,#b6e7ee,#8b9ed8);color:#23324b;font-size:58px;border:4px solid #e5f6ff;box-shadow:0 0 36px #8bd5e855}
+h1{margin:14px 0 4px;font-size:2rem}p{line-height:1.65;color:#c8d7e6}.panel{background:#192638eF;border:1px solid #354a60;border-radius:18px;padding:18px;margin:14px 0}
+#log{height:220px;overflow:auto;background:#0e1724;border-radius:12px;padding:12px;white-space:pre-wrap}
+input,button{font:inherit;border-radius:10px;padding:12px;border:1px solid #536b82}input{width:100%;background:#0e1724;color:var(--text);margin:8px 0}button{background:var(--accent);color:#132333;font-weight:700;cursor:pointer;margin:4px 4px 4px 0}button.secondary{background:#30445a;color:white}
+.small{font-size:.9rem;color:#aebfd0}
+</style>
+</head>
+<body><main>
+<header><div class="avatar" aria-label="朝霧すいの仮アバター">水</div><h1>朝霧すい</h1><p>あなたと自然におしゃべりする配信アシスタント</p></header>
+<section class="panel"><h2>おしゃべり</h2><div id="log" aria-live="polite">朝霧すい：こんにちは。朝霧すいです。話しかけてください。</div>
+<form id="chat"><label for="message">メッセージ</label><input id="message" autocomplete="off" placeholder="ここに入力してください">
+<button type="submit">送信</button><button class="secondary" type="button" id="speak">最後の返事を読み上げ</button></form>
+<p class="small">この初期ページはブラウザー内だけで動きます。生成AIとの接続やYouTube配信連携は、設定と認証を追加する必要があります。</p></section>
+<section class="panel"><h2>設定メモ</h2><p>APIキーやYouTubeアクセストークンなどの秘密情報を、公開リポジトリやHTMLファイルに直接書かないでください。</p><p>GitHub Pagesで公開するには、リポジトリの Settings → Pages で main ブランチのルートを公開元に設定します。</p></section>
+</main>
+<script>
+const log=document.getElementById('log');let lastReply='こんにちは。朝霧すいです。';
+function add(who,text){log.textContent += '\n'+who+'：'+text;log.scrollTop=log.scrollHeight}
+document.getElementById('chat').addEventListener('submit',e=>{e.preventDefault();const input=document.getElementById('message');const msg=input.value.trim();if(!msg)return;add('あなた',msg);lastReply='メッセージありがとう。今は基本動作の確認モードです。生成AIのAPIを安全に接続すると、もっと自然に会話できるようになります。';add('朝霧すい',lastReply);input.value=''});
+document.getElementById('speak').addEventListener('click',()=>{if(!('speechSynthesis'in window)){add('システム','このブラウザーは音声読み上げに対応していません。');return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(lastReply);u.lang='ja-JP';speechSynthesis.speak(u)});
+</script></body></html>
